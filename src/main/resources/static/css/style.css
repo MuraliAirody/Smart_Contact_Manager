@@ -1,0 +1,91 @@
+@charset "ISO-8859-1";
+
+body{
+	background: #e2e2e2;
+}
+.banner{
+	width:100%;
+	height: 93vh;
+	background:linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)),url("../images/banner2.jpg");
+	background-size: cover;
+    color:white;
+}
+
+.bg-yel{
+	background: 	#20B2AA;
+}
+.reg-card{
+	padding:20px;
+	background: #ffffff;
+}
+
+
+/* login page
+ */
+.btn-color{
+  background-color: #0e1c36;
+  color: #fff;
+  
+}
+
+.profile-image-pic{
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+}
+
+
+
+.cardbody-color{
+  background-color: #ebf2fa;
+}
+
+a{
+  text-decoration: none;
+}
+
+/* side bar and content altration */
+
+.sidebar{
+	width:18%;
+	height:100%;
+	background: white;
+	padding-top: 45px;
+	position: fixed;
+	display: block;
+}
+.sidebar a{
+	display: block;
+	width:100%;
+	padding: 10px 25px;
+	text-decoration: none;
+	color: gray;
+}
+.sidebar a:hover{
+	background: graytext;
+	color: white;
+}
+.content{
+	margin-left: 20%;
+}
+.cross-btn{
+	position:absolute;
+	top:-10px;
+	right: 20px;
+	font-size: 30px;
+	cursor: pointer;
+}
+
+@media only screen and (max-width:600px){
+	.sidebar{
+	width:80%;
+	height:100%;
+	background: white;
+	padding-top: 20px;
+	position: fixed;
+	display: none;
+}
+.content{
+	margin-left: 0px;
+}
+}

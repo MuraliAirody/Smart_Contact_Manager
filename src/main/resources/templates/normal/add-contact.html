@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  th:replace="/common/normalBase::frag(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<section>
+              <div  class="card me-3">
+              
+                 <div class="card-body ">
+                     
+                       <h1 class="text-center">ADD CONTACT</h1>
+                       
+                       <div  class="container">
+                        
+                          <div class="row">
+                                  <div class="col-md-8  offset-md-2" >
+                                            <form  th:action="@{/user/process-addcontact}"  th:object="${contact}" enctype="multpart/form-data" method="post">
+                                                   
+                                                   <div class="input-group mt-2">
+														      <div class="input-group-text"><i class="fa-solid fa-user"></i></div>
+														      <input type="text" class="form-control" name="name" placeholder="Enter Contact Name">
+												    </div>
+												   
+                                                     <div class="input-group mt-3">
+														      <div class="input-group-text"> <i class="fa-sharp fa-solid fa-user"></i></div>
+														      <input type="text" class="form-control" name="secondname" placeholder="Enter Nick Name">
+												    </div>
+												    
+												    <div class="input-group mt-3">
+														      <div class="input-group-text"><i class="fa-solid fa-envelope"></i></div>
+														      <input type="text" class="form-control" name="email" placeholder="Enter email">
+												    </div>
+												    
+												     <div class="input-group mt-3">
+														      <div class="input-group-text"><i class="fa-solid fa-phone"></i></div>
+														      <input type="text" class="form-control" name="phone" placeholder="Enter phone number">
+												    </div>
+												    
+												    <div class="input-group mt-3">
+														      <div class="input-group-text"><i class="fa-solid fa-building"></i></div>
+														      <input type="text" class="form-control" name="work" placeholder="Enter proffession">
+												    </div>
+                                            
+                                                    <div class="input-group mt-3">
+														 
+														    	<span class="input-group-text" ><i class="fa-solid fa-cloud-arrow-up"></i></span>
+			
+															    <input type="file" class="custom-file-input" name="image" placeholder="Choose profile picture">
+	                                                             
+													</div>
+													
+													<div class="form-group mt-3">
+													   <textarea rows="10" class="form-control" placeholder="Enter description here" name="description"></textarea>
+													</div>
+													
+													<div class="container text-center mt-3">
+													     <button type="submit" class="btn btn-outline-primary" >Submit</button>
+													
+													</div>
+		 
+                                            
+                                            </form>
+                                 </div>
+                          </div>
+                           
+                       </div>
+                 
+                 </div>
+              
+              
+              </div>
+</section>
+</body>
+</html>
