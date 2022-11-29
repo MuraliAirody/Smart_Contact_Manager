@@ -1,18 +1,31 @@
 package com.contactmanager.controller;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.contactmanager.dao.Repository;
 import com.contactmanager.entities.Contact;
 import com.contactmanager.entities.User;
+import com.contactmanager.helper.Message;
 
 @Controller
 @RequestMapping("/user")
@@ -28,6 +41,7 @@ public class UserController {
 		User user= repository.getUserByName(name);
 		model.addAttribute("user",user);
 	}
+	
 	@RequestMapping("/index")
 	public String dashboard(Model model) {
  
@@ -42,16 +56,56 @@ public class UserController {
 		modell.addAttribute("contact",new Contact());
 		return "normal/add-contact";
 	}
+	@GetMapping("/process-addcontact")
+	public String  getprocesscontact(Model modell){
+		
+		return "normal/add-contact";
+	}
 	
 	@PostMapping("/process-addcontact")
-	public String processcontact(@ModelAttribute Contact contact,Principal principal){
+	public String processcontact(@Valid @ModelAttribute Contact contact,BindingResult bindingResult,Principal principal,
+			@RequestParam("profile-image") MultipartFile file,
+			HttpSession session,Model model){
 		
-		User user = repository.getUserByName(principal.getName());
-	    user.getContacts().add(contact);
-	    contact.setUser(user);
-	    repository.save(user);
-	    
-		System.out.println(contact);
+		try {
+        			User user = repository.getUserByName(principal.getName());
+        			
+        			if(bindingResult.hasErrors())
+        			{
+        				return "normal/add-contact";
+        			}
+        			
+        			//processing and uploading the file
+        			if(file.isEmpty()) {
+        				
+        			}else {
+        				//upload the file to folder and update the name to contact
+        				
+        				contact.setImage(file.getOriginalFilename());
+        				
+        				File saveFile = new ClassPathResource("static/images").getFile();
+        				Path pathtoSave = Paths.get(saveFile.getAbsolutePath()+ File.separator+file.getOriginalFilename());
+        						
+        				Files.copy(file.getInputStream(), pathtoSave, StandardCopyOption.REPLACE_EXISTING);
+        				
+        			}
+        			 		
+        			
+		    user.getContacts().add(contact);
+		    contact.setUser(user);
+		    repository.save(user);
+		    
+		    //send the success message using session
+		    session.setAttribute("message", new Message("Contact Successfuly added", "alert-success"));
+		    
+			System.out.println(contact);
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		    session.setAttribute("message", new Message("Something went wrong", "alert-danger"));
+
+		}
+
 
 		return "normal/add-contact";
 	}

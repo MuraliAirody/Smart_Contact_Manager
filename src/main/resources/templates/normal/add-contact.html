@@ -6,7 +6,7 @@
 </head>
 <body>
 <section>
-              <div  class="card me-3">
+              <div  class="card me-3 rounded">
               
                  <div class="card-body ">
                      
@@ -14,45 +14,77 @@
                        
                        <div  class="container">
                         
+                        <div  th:if="${session.message}" th:classappend="${session.message.type}"  class="alert alert-success text-center" role="alert">
+						 <p th:text="${session.message.msg}"></p>
+						  <th:block  th:text="${#session.removeAttribute('message')}"></th:block>
+						</div>
+                        
                           <div class="row">
                                   <div class="col-md-8  offset-md-2" >
-                                            <form  th:action="@{/user/process-addcontact}"  th:object="${contact}" enctype="multpart/form-data" method="post">
+                                            <form  th:action="@{/user/process-addcontact}"  th:object="${contact}" enctype="multipart/form-data" method="post">
                                                    
                                                    <div class="input-group mt-2">
 														      <div class="input-group-text"><i class="fa-solid fa-user"></i></div>
-														      <input type="text" class="form-control" name="name" placeholder="Enter Contact Name">
+														      <input type="text" class="form-control" name="name" placeholder="Enter Contact Name"
+														      th:value="${contact.name}"
+														      th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ' '}">
+														      
+														       <div class="invalid-feedback" th:each="e : ${#fields.errors('name')}" th:text="${e}">
+															   </div>
 												    </div>
 												   
                                                      <div class="input-group mt-3">
 														      <div class="input-group-text"> <i class="fa-sharp fa-solid fa-user"></i></div>
-														      <input type="text" class="form-control" name="secondname" placeholder="Enter Nick Name">
+														      <input type="text" class="form-control" name="secondname" placeholder="Enter Nick Name"
+														      th:value="${contact.secondname}"
+														       th:classappend="${#fields.hasErrors('secondname') ? 'is-invalid' : ' '}">
+														       
+														        <div class="invalid-feedback" th:each="e : ${#fields.errors('secondname')}" th:text="${e}">
+															   </div>
 												    </div>
 												    
 												    <div class="input-group mt-3">
 														      <div class="input-group-text"><i class="fa-solid fa-envelope"></i></div>
-														      <input type="text" class="form-control" name="email" placeholder="Enter email">
+														      <input type="text" class="form-control" name="email" placeholder="Enter email"
+														      th:value="${contact.email}"
+														      th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ' '}">
+														      
+														      <div class="invalid-feedback" th:each="e : ${#fields.errors('email')}" th:text="${e}">
+															   </div>
 												    </div>
 												    
 												     <div class="input-group mt-3">
 														      <div class="input-group-text"><i class="fa-solid fa-phone"></i></div>
-														      <input type="text" class="form-control" name="phone" placeholder="Enter phone number">
+														      <input type="text" class="form-control" name="phone" placeholder="Enter phone number"
+														      th:value="${contact.phone}"
+														       th:classappend="${#fields.hasErrors('phone') ? 'is-invalid' : ' '}">
+														       
+														       <div class="invalid-feedback" th:each="e : ${#fields.errors('phone')}" th:text="${e}">
+															   </div>
 												    </div>
 												    
 												    <div class="input-group mt-3">
 														      <div class="input-group-text"><i class="fa-solid fa-building"></i></div>
-														      <input type="text" class="form-control" name="work" placeholder="Enter proffession">
+														      <input type="text" class="form-control" name="work" placeholder="Enter proffession"
+														      th:value="${contact.work}"
+											                    th:classappend="${#fields.hasErrors('work') ? 'is-invalid' : ' '}">
+											                    
+											                     <div class="invalid-feedback" th:each="e : ${#fields.errors('work')}" th:text="${e}">
+															   </div>
 												    </div>
                                             
                                                     <div class="input-group mt-3">
 														 
 														    	<span class="input-group-text" ><i class="fa-solid fa-cloud-arrow-up"></i></span>
 			
-															    <input type="file" class="custom-file-input" name="image" placeholder="Choose profile picture">
+															    <input type="file" class="custom-file-input" name="profile-image" placeholder="Choose profile picture">
+															     
 	                                                             
 													</div>
 													
 													<div class="form-group mt-3">
-													   <textarea rows="10" class="form-control" placeholder="Enter description here" name="description"></textarea>
+													   <textarea rows="10" class="form-control" placeholder="Enter description here"
+													   th:value="${contact.description}" name="description"></textarea>
 													</div>
 													
 													<div class="container text-center mt-3">

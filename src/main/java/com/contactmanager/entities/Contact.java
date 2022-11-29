@@ -7,6 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "CONTACT")
@@ -16,10 +20,19 @@ public class Contact {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int cid;
 	
+	@NotBlank(message = "Name must be required")
 	private String name;
+	
+	@NotBlank(message ="Nick name must be required" )
+	@Size(min = 3,message = "size of the nick name must be greater than 3 charecters")
 	private String secondname;
+	
+	@Pattern(regexp = "[a-z0-9]+@[a-z]+\\.[a-z]{2,3}",message = "Invalid Email")
 	private String email;
 	private String work;
+	
+	@NotBlank(message = "Phone number must be required")
+    @Digits(message="Number should contain 10 digits.", fraction = 0, integer = 10)
 	private String phone;
 	private String image;
 	
