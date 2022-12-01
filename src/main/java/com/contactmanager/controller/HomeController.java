@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.contactmanager.dao.Repository;
+import com.contactmanager.dao.UserRepository;
 import com.contactmanager.entities.User;
 import com.contactmanager.helper.Message;
 
@@ -25,7 +25,7 @@ public class HomeController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Autowired
-	private Repository repository;
+	private UserRepository repository;
 	
 	@RequestMapping("/")
 	public String home(Model model) {

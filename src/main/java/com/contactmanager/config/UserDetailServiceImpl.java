@@ -5,14 +5,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.contactmanager.dao.Repository;
+import com.contactmanager.dao.UserRepository;
 import com.contactmanager.entities.User;
 
 
 public class UserDetailServiceImpl implements UserDetailsService{
 
 	@Autowired
-	private Repository repository;
+	private UserRepository repository;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

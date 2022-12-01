@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.contactmanager.entities.User;
 
-public interface Repository extends JpaRepository<User, Integer>{
+public interface UserRepository extends JpaRepository<User, Integer>{
 
 	@Query("select u from User u where u.email = :email")
 	public User getUserByName(@Param("email") String email);
