@@ -12,10 +12,17 @@
                  <div class="card-body ">
                      
                        <h1 class="text-center">Your Contacts</h1>
+                       
+                         <div  th:if="${session.message}"   th:classappend="${session.message.type}"   class="alert  text-center" role="alert">
+														          <p th:text="${session.message.msg}"> </p>
+														          
+														          <th:block  th:text="${#session.removeAttribute('message')}"></th:block>
+						</div>
+                       
                        <table class="table table-hover">
 										  <thead>
 												    <tr>
-												      <th scope="col">#ID</th>
+												      <th scope="col"  class="cid">#ID</th>
 												      <th scope="col">Name</th>
 												      <th scope="col">Email</th>
 												      <th scope="col">Phone</th>
@@ -25,13 +32,22 @@
 										  <tbody>
 												    <tr th:each="c:${contacts}">
 												      <th scope="row" th:text="${'SCM'+c.cid}"></th>
-												      <td th:text="${c.name}"></td>
-												      <td th:text="${c.email}"></td>
+												      <td >
+												               <img style=""	
+																class="contactPic"  alt="profile picture" th:src="@{'/images/'+${c.image}}">
+																
+												               <span th:text="${c.name}"></span>
+												      </td>
+												      <td>
+												         <a th:href="@{'/user/contact_details/'+${c.cid}}">
+												                <span  th:text="${c.email}"></span>
+												         </a>
+												      </td>
 												      <td th:text="${c.phone}"></td>
 												      <td>
-												         <span><i class="fa-solid fa-pen"></i></span>
-												         <span><i class="fa-solid fa-eye"></i></span>
-												         <span><i class="fa-solid fa-trash"></i></span>
+												         <a ><span><i class="fa-solid fa-pen text-success"></i></span></a>
+												         <a  th:href="@{'/user/contact_details/' +${c.cid}}"><span><i class="fa-solid fa-eye text-primary"></i></span></a>
+												        <a   href="#" th:onclick="| del('${c.cid}') |"> <span><i class="fa-solid fa-trash text-danger"></i></span></a>
 												      </td>
 												    </tr>
 										  
@@ -44,7 +60,7 @@
 										    
 											    <li  th:classappend="${currentPage==i-1?'active':' '}" th:each="i:${#numbers.sequence(1,totalPage)}" class="page-item">
 											    <a  class="page-link"  th:href="@{'/user/show_contacts/'+${i-1}}">
-											           <span th:text=${i}></span>
+											           <span  th:text=${i}></span>
 											       </a></li>
 											    
 											    <li th:if="${currentPage+1!=totalPage}" class="page-item"><a class="page-link" th:href="@{'/user/show_contacts/'+${currentPage+1}}">Next</a> </li>

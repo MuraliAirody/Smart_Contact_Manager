@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  th:replace="/common/normalBase::frag(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<section>
+               <div class="card me-3  " th:if="${contact}">
+                    <div class="card-body">
+                       <div class="container text-center">
+                                                               <img style=""	
+																class="contactProf"  alt="profile picture" th:src="@{'/images/'+${contact.image}}">
+																<h3 class="mt-3"><span th:text="${contact.name}"></span><br>(<span th:text="${contact.secondname}"></span>)</h3>
+															
+																
+																  <div class="table-contact-info mt-3">
+																        <table class="table table-borderless contact-info">
+																	  <thead>
+																		    <tr>
+																			      <th scope="col">#ID</th>
+																			       <td scope="col"  ><span th:text="${'SCM'+contact.cid}"></span></td>
+																		    </tr>
+																	  </thead>
+																				  <tbody>
+																				       <tr>
+																						     <th scope="row">Phone</th>
+																						      <td><span th:text="${contact.phone}"></span></td>     
+																					    </tr>
+																				  
+																					    <tr>
+																						     <th scope="row">Email</th>
+																						      <td><span th:text="${contact.email}"></span></td>     
+																					    </tr>
+																					     <tr>
+																						     <th scope="row">Work</th>
+																						      <td><span   th:text="${contact.work}"></span></td>   
+																					    </tr>
+																				   
+																				  </tbody>
+																	</table>
+																  
+																  </div>
+																	
+																	<div class=" mt-3 description ">
+																	         <th:block  th:text="${contact.description}"></th:block>
+																	</div>
+																	
+																	<div class="container  mt-3">
+																	       <a  class="btn btn-primary btn-sm ">UPDATE</a>
+																	      <!-- <a th:href="@{'/user/delete/' +${contact.cid}}" class="btn btn-danger btn-sm ">DELETE</a> -->
+																	      <a th:onclick="| del('${contact.cid}') |" class="btn btn-danger btn-sm ">DELETE</a>
+																	</div>
+						</div>										
+                    </div>
+               </div>
+               
+               <div th:unless="${contact}" class=" text-center bg-danger text-white me-3">
+                      <h3>You don't have permission to access this contact</h3>
+               </div>
+  </section>             
+</body>
+</html>

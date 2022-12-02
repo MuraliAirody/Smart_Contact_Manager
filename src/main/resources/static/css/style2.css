@@ -1,0 +1,32 @@
+@charset "ISO-8859-1";
+
+.contactPic{
+		width:35px;
+		height:35px;
+		object-fit:cover;
+		border-radius: 50%;
+}
+
+i{
+margin-left: 10px;	
+}
+
+.contactProf{
+	width:200px;
+	height:200px;
+	object-fit:cover;
+	border-radius: 50%;	
+}
+
+
+
+.description{
+	border:none;
+	padding:10px;
+	background: white;
+	font-weight: bold;
+}
+
+.table-contact-info{
+	border:1px solid black;
+}

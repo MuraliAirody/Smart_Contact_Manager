@@ -88,4 +88,20 @@ a{
 .content{
 	margin-left: 0px;
 }
+
+.contactPic{
+	width:35px;
+	height:35px;
+	border-radius: 50%;
+	border: 1px solid black;
+
+}
+
+.contactProf{
+	width:35px;
+		height:35px;
+	object-fit:cover;
+	border-radius: 50%;
+}
+
 }
