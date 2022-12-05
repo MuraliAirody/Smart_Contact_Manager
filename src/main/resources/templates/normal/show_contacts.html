@@ -45,15 +45,20 @@
 												      </td>
 												      <td th:text="${c.phone}"></td>
 												      <td>
-												         <a ><span><i class="fa-solid fa-pen text-success"></i></span></a>
+												         <form th:action="@{'/user/update-contact/'+${c.cid} }" method="post">
+												               <div class="container">
+												                     		<button type="submit"   class="btn btn-sm "><span><i class="fa-solid fa-pen"></i></span></button>   
+												               </div>
+												         </form>			
 												         <a  th:href="@{'/user/contact_details/' +${c.cid}}"><span><i class="fa-solid fa-eye text-primary"></i></span></a>
-												        <a   href="#" th:onclick="| del('${c.cid}') |"> <span><i class="fa-solid fa-trash text-danger"></i></span></a>
+												         <a   href="#" th:onclick="| del('${c.cid}') |"> <span><i class="fa-solid fa-trash text-danger"></i></span></a>
 												      </td>
 												    </tr>
 										  
 										  </tbody>
 						</table>
 						
+						<!-- complete pagination code  -->
 						<nav aria-label="Page navigation example">
 								  <ul class="pagination justify-content-center">
 										    <li th:if="${currentPage!=0}" class="page-item "> <a class="page-link" th:href="@{'/user/show_contacts/'+${currentPage-1}}" tabindex="-1">Previous</a> </li>

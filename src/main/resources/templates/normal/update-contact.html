@@ -6,24 +6,25 @@
 </head>
 <body>
 <section>
-              <div  class="card me-3 ">
+                 <div  class="card me-3 ">
               
                  <div class="card-body ">
                      
-                       <h1 class="text-center">ADD CONTACT</h1>
+                       <h1 class="text-center">UPDATE CONTACT</h1>
                        
                        <div  class="container">
                         
-                        <div  th:if="${session.message}" th:classappend="${session.message.type}"  class="alert alert-success text-center" role="alert">
-						 <p th:text="${session.message.msg}"></p>
-						  <th:block  th:text="${#session.removeAttribute('message')}"></th:block>
-						</div>
+                        
                         
                           <div class="row">
                                   <div class="col-md-8  offset-md-2" >
-                                            <form  th:action="@{/user/process-addcontact}"  th:object="${contact}" enctype="multipart/form-data" method="post">
+                                            <form  th:action="@{/user/process-updatecontact}"  th:object="${contact}" enctype="multipart/form-data" method="post">
                                                    
+                                                   <!-- Passing Id through hidden field -->
                                                    
+                                                   <input type="hidden" name="cid" th:value="${contact.cid}" >
+                                                   
+                                                  <!--  Name filed -->
                                                    
                                                    <div class="input-group mt-2">
 														      <div class="input-group-text"><i class="fa-solid fa-user"></i></div>
@@ -35,6 +36,8 @@
 															   </div>
 												    </div>
 												   
+												   <!--  Nick name /second name -->
+												   
                                                      <div class="input-group mt-3">
 														      <div class="input-group-text"> <i class="fa-sharp fa-solid fa-user"></i></div>
 														      <input type="text" class="form-control" name="secondname" placeholder="Enter Nick Name"
@@ -44,6 +47,8 @@
 														        <div class="invalid-feedback" th:each="e : ${#fields.errors('secondname')}" th:text="${e}">
 															   </div>
 												    </div>
+												    
+												    <!-- Email field -->
 												    
 												    <div class="input-group mt-3">
 														      <div class="input-group-text"><i class="fa-solid fa-envelope"></i></div>
@@ -55,6 +60,8 @@
 															   </div>
 												    </div>
 												    
+												    <!-- Phone number field -->
+												    
 												     <div class="input-group mt-3">
 														      <div class="input-group-text"><i class="fa-solid fa-phone"></i></div>
 														      <input type="text" class="form-control" name="phone" placeholder="Enter phone number"
@@ -64,6 +71,8 @@
 														       <div class="invalid-feedback" th:each="e : ${#fields.errors('phone')}" th:text="${e}">
 															   </div>
 												    </div>
+												    
+												    <!--Work field   -->
 												    
 												    <div class="input-group mt-3">
 														      <div class="input-group-text"><i class="fa-solid fa-building"></i></div>
@@ -75,19 +84,30 @@
 															   </div>
 												    </div>
                                             
+                                            <!--profile image adding filed  -->
+                                            
                                                     <div class="input-group mt-3">
 														        
-														    	<span class="input-group-text" ><i class="fa-solid fa-cloud-arrow-up"></i></span>
-			
-															    <input type="file" class="custom-file-input" name="profile-image" placeholder="Choose profile picture">
-															     
-	                                                             
+														        <div class="container text-center mb-3">
+														               <img class="contactProf" alt="" th:src="@{'/images/'+${contact.image}}">
+														        </div>
+														        <div class="container ">
+														             <p class="text-secondary ">Update contact profile picture</p>
+														        </div>
+
+														    	<span class="input-group-text" ><i class="fa-solid fa-cloud-arrow-up"></i> </span>
+			                                                    <input type="file" class="custom-file-input" name="profile-image" placeholder="Choose profile picture">
+	
 													</div>
+													
+													<!-- contact description field  -->
 													
 													<div class="form-group mt-3">
 													   <textarea id="mytextarea" rows="10" class="form-control" placeholder="Enter description here"
-													   th:value="${contact.description}" name="description"></textarea>
+													   th:text="${contact.description}" name="description"></textarea>
 													</div>
+													
+													<!-- form submitiing button  -->
 													
 													<div class="container text-center mt-3">
 													     <button type="submit" class="btn btn-outline-primary" >Submit</button>
@@ -104,9 +124,10 @@
                  </div>
               
               
-              </div>
+              </div> 
+             
               
-                  <!-- Adding tiny MCE inside the text editor -->
+              <!-- Adding tiny MCE inside the text editor -->
               
               <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
                <script>
@@ -114,6 +135,7 @@
 					        selector: '#mytextarea'
 					      });
               </script>
+              
 </section>
 </body>
 </html>

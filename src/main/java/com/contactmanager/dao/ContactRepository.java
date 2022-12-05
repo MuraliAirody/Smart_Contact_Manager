@@ -19,10 +19,15 @@ public interface ContactRepository  extends JpaRepository<Contact,Integer>{
 	@Query(nativeQuery = true,value = "select * from contact where user_id=:id")
 //	public List<Contact> getContactsByUserId(@Param("id")int userId);
 	public Page<Contact> getContactsByUserId(@Param("id") int userId,Pageable pageable);
+	
+
 
 	@Modifying
 	@Transactional
 	@Query("delete from Contact c where c.cid =:id")
     public void deleteContactById(@Param("id") int id);
+	
+	
+
 	
 }
