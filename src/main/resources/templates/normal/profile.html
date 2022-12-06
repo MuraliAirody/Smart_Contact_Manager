@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  th:replace="/common/normalBase::frag(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<section>
+                <div class="card me-3  " th:if="${user}">
+                    <div class="card-body">
+                       <div class="container text-center">
+                       
+                      <!-- This bellow alert box display  after successful update / or display only if session have any mesage-->
+                             <div  th:if="${session.message}" th:classappend="${session.message.type}"  class="alert alert-success text-center" role="alert">
+											 <p th:text="${session.message.msg}"></p>
+											  <th:block  th:text="${#session.removeAttribute('message')}"></th:block>
+						    </div>
+						    
+						    
+                                                               <img style=""	
+																class="contactProf"  alt="profile picture" th:src="@{'/images/'+${user.imageUrl}}">
+																<h3 class="mt-3"><span th:text="${user.name}"></span></h3>
+															
+																
+																  <div class="table-contact-info mt-3">
+																        <table class="table table-borderless contact-info">
+																	  <thead>
+																		    <tr>
+																			      <th scope="col">#USER_ID</th>
+																			       <td scope="col"  ><span th:text="${'SCM'+user.id}"></span></td>
+																		    </tr>
+																	  </thead>
+																				  <tbody>
+																				       <tr>
+																						     <th scope="row">Role</th>
+																						      <td><span th:text="${user.role}"></span></td>     
+																					    </tr>
+																				  
+																					    <tr>
+																						     <th scope="row">Email</th>
+																						      <td><span th:text="${user.email}"></span></td>     
+																					    </tr>
+																					     <tr>
+																						     <th scope="row">Account activity</th>
+																						      <td><span   th:text="${user.enabled}"></span></td>   
+																					    </tr>
+																				   
+																				  </tbody>
+																	</table>
+																  
+																  </div>
+																	
+																	<div class=" mt-3 description ">
+																	         <th:block  th:utext="${user.about}"></th:block>
+																	</div>
+																	
+																	<div class="container  mt-3">
+																	   <form th:action="@{'/user/update-user/'+${user.id} }" method="post" >
+																	       <button type="submit" class="btn btn-primary btn-sm ">UPDATE</button>
+																	   </form>    
+																	      <a th:onclick="| deluser('${user.id}') |" class="btn btn-danger btn-sm ">DELETE</a>
+																	</div>
+						</div>										
+                    </div>
+               </div>
+               
+               <div th:unless="${user}" class=" text-center bg-danger text-white me-3">
+                      <h3>You don't have permission to access this contact</h3>
+               </div>
+</section>
+</body>
+</html>

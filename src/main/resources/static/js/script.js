@@ -32,7 +32,7 @@ const crossfun = () =>{
 document.getElementsByClassName("cross-btn")[0].addEventListener("click",crossfun);
 
 
-/** deleteing contact **/
+/** alert box for  deleteing contact **/
 const del =(cid) =>{
 	
 			swal({
@@ -49,6 +49,27 @@ const del =(cid) =>{
 									    
 									  } else {
 									    swal("Your contact  is safe!");
+									  }
+						});
+}
+
+/** alert box for  deleteing user **/
+const deluser =(id) =>{
+	
+			swal({
+									  title: "Are you sure? you want to delete this account",
+									  text: "Once deleted, you will not be able to see this Profile",
+									  icon: "warning",
+									  buttons: true,
+									  dangerMode: true,
+									})
+									.then((willDelete) => {
+									  if (willDelete) {
+										  
+									      window.location = "/user/delete-user/"+id;
+									    
+									  } else {
+									    swal("Your account  is safe!");
 									  }
 						});
 }

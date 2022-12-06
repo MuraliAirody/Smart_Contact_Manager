@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  th:replace="/common/normalBase::frag(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<section>
+                  
+                  <div  class="card me-3 ">
+              
+                 <div class="card-body ">
+                     
+                       <h1 class="text-center">UPDATE USER</h1>
+                       
+                       <div  class="container">
+                        
+                        
+                        
+                          <div class="row">
+                                  <div class="col-md-8  offset-md-2" >
+                                            <form  th:action="@{/user/process-updateuser}"  th:object="${user}" enctype="multipart/form-data" method="post">
+                                                   
+                                                   <!-- Passing Id through hidden field -->
+                                                   
+                                                   <input type="hidden" name="cid" th:value="${user.id}" >
+                                                   
+                                                  <!--  Name filed -->
+                                                   
+                                                   <div class="input-group mt-2">
+														      <div class="input-group-text"><i class="fa-solid fa-user"></i></div>
+														      <input type="text" class="form-control" name="name" placeholder="Enter Your Name"
+														      th:value="${user.name}"
+														      th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ' '}">
+														      
+														       <div class="invalid-feedback" th:each="e : ${#fields.errors('name')}" th:text="${e}">
+															   </div>
+												    </div>
+												   
+											
+												    
+												    <!-- Email field -->
+												    
+												    <div class="input-group mt-3">
+														      <div class="input-group-text"><i class="fa-solid fa-envelope"></i></div>
+														      <input type="text" class="form-control" name="email" placeholder="Enter email"
+														      th:value="${user.email}"
+														      th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ' '}">
+														      
+														      <div class="invalid-feedback" th:each="e : ${#fields.errors('email')}" th:text="${e}">
+															   </div>
+												    </div>
+										
+												 
+                                            
+                                            <!--profile image adding filed  -->
+                                            
+                                                    <div class="input-group mt-3">
+														        
+														        <div class="container text-center mb-3">
+														               <img class="contactProf" alt="" th:src="@{'/images/'+${user.imageUrl}}">
+														        </div>
+														        <div class="container ">
+														             <p class="text-secondary ">Update user profile picture</p>
+														        </div>
+
+														    	<span class="input-group-text" ><i class="fa-solid fa-cloud-arrow-up"></i> </span>
+			                                                    <input type="file" class="custom-file-input" name="profile-image" placeholder="Choose profile picture">
+	
+													</div>
+													
+													<!-- user description field  -->
+													
+													<div class="form-group mt-3">
+													   <textarea id="mytextarea" rows="10" class="form-control" placeholder="Enter about you"
+													   th:utext="${user.about}" name="about"></textarea>
+													</div>
+													
+													<!-- form submitiing button  -->
+													
+													<div class="container text-center mt-3">
+													     <button type="submit" class="btn btn-outline-primary" >Submit</button>
+													
+													</div>
+		 
+                                            
+                                            </form>
+                                 </div>
+                          </div>
+                           
+                       </div>
+                 
+                 </div>
+              
+              
+              </div> 
+             
+              
+              <!-- Adding tiny MCE inside the text editor -->
+              
+              <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+               <script>
+					      tinymce.init({
+					        selector: '#mytextarea'
+					      });
+              </script>
+                  
+</section>
+</body>
+</html>

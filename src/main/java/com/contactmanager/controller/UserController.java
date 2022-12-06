@@ -212,10 +212,15 @@ public class UserController {
 			//			contact.setUser(null);
 			//			 this.contactRepository.delete(contact);
 						 this.contactRepository.deleteContactById(cid);
+//						 System.out.println("contact "+!"default.png".equals(contact.getImage())+" "+contact.getImage());
 						 
-						 File deleteFile = new ClassPathResource("static/images").getFile();
-                         File file2 = new File(deleteFile, contact.getImage());
-                         file2.delete();
+						 // to save the default image in the static folder I added check, bcz if I delete default image other contact or profile default image also got deleted
+						 if(!"default.png".equals(contact.getImage()))
+						 {
+							 File deleteFile = new ClassPathResource("static/images").getFile();
+	                         File file2 = new File(deleteFile, contact.getImage());
+	                         file2.delete();
+						 }
                          
 						 session.setAttribute("message",new Message("contact deleted successfuly", "alert-success"));
 					}
@@ -242,10 +247,11 @@ public class UserController {
 			@RequestParam("profile-image") MultipartFile file,HttpSession session,Principal principal) {
 		
 						System.out.println("contact name ->"+contact.getName());
-						System.out.println("conyacy ID =>"+contact.getCid());
+						System.out.println("contact ID =>"+contact.getCid());
+						System.out.println("image "+contact.getImage());
 						
 						Contact oldContactDetails = this.contactRepository.findById(contact.getCid()).get();
-		
+
 		try {
 						//image
 						if(!file.isEmpty())
@@ -253,9 +259,15 @@ public class UserController {
 							//work on file
 							
 							//delete the old image
-							File deleteFile = new ClassPathResource("static/images").getFile();
-                            File file2 = new File(deleteFile, oldContactDetails.getImage());
-                            file2.delete();
+//							System.out.println(!"default.png".equals(oldContactDetails.getImage()) + " " + oldContactDetails.getImage());
+							
+							     //check for default image, if have default image as a profile keep it as it is in the folder bcz some contacts or profile using default images
+							 if(!"default.png".equals(oldContactDetails.getImage()))
+							 {
+								 File deleteFile = new ClassPathResource("static/images").getFile();
+		                         File file2 = new File(deleteFile, oldContactDetails.getImage());
+		                         file2.delete();
+							 }
 							
 							//update the new image
 							File updateFile = new ClassPathResource("static/images").getFile();
@@ -282,5 +294,97 @@ public class UserController {
 		return "redirect:/user/contact_details/"+contact.getCid();
 	}
 	
+	
+	//profile page url
+	@GetMapping("/profile-page")
+	public String profilePage(Model model,Principal principal) {
+		
+		String name = principal.getName();
+		User user = this.repository.getUserByName(name);
+		
+		model.addAttribute("user",user);
+		
+		return "normal/profile";
+	}
 
+	@RequestMapping(value = "/update-user/{id}",method = RequestMethod.POST)
+	public String updateUserProfile(@PathVariable("id") int id,Model model) {
+						User user = this.repository.findById(id).get();
+						model.addAttribute("title", "Update Profile");
+						model.addAttribute("user", user);
+						return "normal/update-user";
+	}
+	
+	@PostMapping("/process-updateuser")
+	public String process_The_Updated_UserDeatils_(@ModelAttribute User user,
+			@RequestParam("profile-image")MultipartFile file,HttpSession session,Model model,Principal principal) {
+	    
+		System.out.println("user image ->"+user.getImageUrl());
+		
+		try {
+			//image
+			if(!file.isEmpty())
+			{
+							//work on file
+							
+							//delete the old image
+							 if(!"default.png".equals(user.getImageUrl())) {
+								 File deleteFile = new ClassPathResource("static/images").getFile();
+				                 File file2 = new File(deleteFile, user.getImageUrl());
+				                 file2.delete();
+								 }
+							
+							//update the new image
+							File updateFile = new ClassPathResource("static/images").getFile();
+							Path pathtoSave = Paths.get(updateFile.getAbsolutePath()+ File.separator+user.getId()+"-USER-"+file.getOriginalFilename());
+							Files.copy(file.getInputStream(), pathtoSave, StandardCopyOption.REPLACE_EXISTING);
+							
+							user.setImageUrl(user.getId()+"-USER-"+file.getOriginalFilename());
+				
+			}
+			else {
+							user.setImageUrl(user.getImageUrl());
+			}
+					User user1 = this.repository.getUserByName(principal.getName());
+					user.setContacts(user1.getContacts());
+					this.repository.save(user);
+					
+					session.setAttribute("message", new Message("user successfuly updated", "alert-success"));
+			
+		} catch (Exception e) {
+			   e.printStackTrace();
+			   System.out.println(e.getMessage());
+		}
+		
+		
+		
+		return "redirect:/user/profile-page";
+	}
+	
+	@GetMapping("/delete-user/{id}")
+	public String deleteUserProfile(@PathVariable("id")int id,Principal principal,HttpSession session) {
+		
+		User loged_user = this.repository.getUserByName(principal.getName());
+	
+		// verifying the uloged user id and id passing within the url
+	try {	
+		if(loged_user.getId()==id) {
+
+				 this.repository.delete(loged_user);
+				 
+				 if(!"default.png".equals(loged_user.getImageUrl())) {
+				 File deleteFile = new ClassPathResource("static/images").getFile();
+                 File file2 = new File(deleteFile, loged_user.getImageUrl());
+                 file2.delete();
+				 }
+                 
+				 session.setAttribute("message",new Message("Account deleted successfuly... Please register again", "alert-success"));
+			}
+	}
+	catch (Exception e) {
+            e.printStackTrace();
+	}
+           
+		return "redirect:/logout";
+	}
 }
