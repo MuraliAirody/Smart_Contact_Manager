@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.contactmanager.entities.Contact;
+import com.contactmanager.entities.User;
 
 public interface ContactRepository  extends JpaRepository<Contact,Integer>{
 
@@ -27,7 +28,12 @@ public interface ContactRepository  extends JpaRepository<Contact,Integer>{
 	@Query("delete from Contact c where c.cid =:id")
     public void deleteContactById(@Param("id") int id);
 	
+	//search
+//	@Query("select c from Contact c where c.name like %:name%  and c.user like %:user%")
+//	public List<Contact> findByNameContainingAndUser(@Param("name") String name,@Param("user") User user);
 	
+	public List<Contact> findByNameContainingAndUser(String name,User user);
+
 
 	
 }

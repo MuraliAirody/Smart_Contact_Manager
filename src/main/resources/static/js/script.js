@@ -73,3 +73,41 @@ const deluser =(id) =>{
 									  }
 						});
 }
+
+/**seaching feature**/
+
+const search = () =>{
+	let query = document.getElementById("search-input").value;
+
+	console.log(query)
+
+	if(query==""){
+		document.getElementsByClassName("search-result")[0].style.display="none";
+
+	}
+	else{
+		let url =`http://localhost:9090/search/${query}`;
+		fetch(url).then(response=>{
+              return response.json();
+		}).then(data=>{
+			console.log(data)    
+			let text = "<div class='list-group'>"   
+
+			data.forEach(contact=>{
+				text+=`<a href='/user/contact_details/${contact.cid}' class='list-group-item list-group-item-action'><img class='contactPic' src='/images/${contact.image}'> ${contact.name}</a>`
+			})
+			text+='</div>'
+			document.getElementsByClassName("search-result")[0].innerHTML = text;	
+		})
+
+  
+		document.getElementsByClassName("search-result")[0].style.display="block";
+	}
+}
+
+// let query = document.getElementById("search-input").value;
+// if(query!=""){
+// 	console.log("calling search")
+// 	search();
+// }
+ 
