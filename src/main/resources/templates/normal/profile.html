@@ -67,6 +67,14 @@
                <div th:unless="${user}" class=" text-center bg-danger text-white me-3">
                       <h3>You don't have permission to access this contact</h3>
                </div>
+               
+                  <!-- adding active link jquery  -->
+                <script type="text/javascript">
+                       $(document).ready(()=>{
+                        $('.item').removeClass("active");
+                       $('#profile-link').addClass("active");
+                       })
+                 </script>
 </section>
 </body>
 </html>

@@ -62,7 +62,7 @@ a{
 	color: gray;
 }
 .sidebar a:hover{
-	background: graytext;
+	background:#D3D3D3;
 	color: white;
 }
 .content{
@@ -84,6 +84,7 @@ a{
 	padding-top: 20px;
 	position: fixed;
 	display: none;
+	z-index: 1;
 }
 .content{
 	margin-left: 0px;

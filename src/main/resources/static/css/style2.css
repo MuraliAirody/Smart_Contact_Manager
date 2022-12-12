@@ -42,4 +42,9 @@ margin-left: 10px;
 	display: none;
 }
 
+/* side bar active status  */
+.active{
+	background: #20B2AA !important;
+	color: white !important;
+}
 
