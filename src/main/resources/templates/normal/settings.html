@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  th:replace="/common/normalBase::frag(~{::section})">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Insert title here</title>
+
+</head>
+<body>
+<section>
+
+
+                <div class="card me-3">
+                    <div class="card-body ">
+                        <h1 class="text-center my-3">SETTINGS</h1>
+                        <h4>Change Password</h4>
+                              <form action="">
+                                  <!--old password-->
+                                  <div class="form-group mb-3">
+                                      <input class="form-control" type="text" placeholder="Enter old password">
+                                  </div>
+                                  <!--enter new password-->
+                                  <div class="form-group mb-3">
+                                      <input class="form-control" type="text" placeholder="enter new password">
+                                  </div>
+                                  <div class="container text-center">
+                                       <button type="submit" class="btn btn-success">Change</button>
+                                        <button type="reset" class="btn btn-warning">Reset</button>
+                                  </div>
+                              </form>
+                    </div>
+                </div>
+
+    <!-- adding active link jquery  -->
+    <script type="text/javascript">
+                       $(document).ready(()=>{
+                        $('.item').removeClass("active");
+                       $('#setting-link').addClass("active");
+                       })
+                 </script>
+
+</section>
+</body>
+</html>
