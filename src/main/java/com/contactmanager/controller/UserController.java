@@ -1,5 +1,24 @@
 package com.contactmanager.controller;
 
+import com.contactmanager.dao.ContactRepository;
+import com.contactmanager.dao.Repository;
+import com.contactmanager.entities.Contact;
+import com.contactmanager.entities.User;
+import com.contactmanager.helper.Message;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -7,38 +26,12 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import javax.websocket.Session;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.objenesis.instantiator.basic.NewInstanceInstantiator;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.contactmanager.dao.ContactRepository;
-import com.contactmanager.dao.Repository;
-import com.contactmanager.entities.Contact;
-import com.contactmanager.entities.User;
-import com.contactmanager.helper.Message;
-
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	@Autowired
 	private Repository repository;
 	
@@ -387,4 +380,37 @@ public class UserController {
            
 		return "redirect:/logout";
 	}
+
+	@GetMapping("/setting")
+	public  String settingpage(Model model){
+		model.addAttribute("title","Settings");
+		return  "normal/settings";
+	}
+
+	@PostMapping("/setting-process")
+	public  String settingProcess(@RequestParam("oldPassword") String oldPassword,
+								  @RequestParam("newPassword") String newPassword,
+								  Principal principal,
+								  HttpSession session){
+		System.out.println("old "+oldPassword);
+		System.out.println("new "+newPassword);
+
+		User user = this.repository.getUserByName(principal.getName());
+
+		System.out.println(passwordEncoder.matches(oldPassword,user.getPassword()));
+
+		if(passwordEncoder.matches(oldPassword,user.getPassword())){
+			user.setPassword(passwordEncoder.encode(newPassword));
+			this.repository.save(user);
+			session.setAttribute("message",new Message("Password Changed successfully","alert-success"));
+
+		}
+		else {
+			 session.setAttribute("message",new Message("Incorrect old password","alert-danger"));
+			 return "redirect:/user/setting";
+		}
+
+		return "redirect:/user/index";
+	}
+
 }

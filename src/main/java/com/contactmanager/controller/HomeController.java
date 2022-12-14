@@ -87,7 +87,18 @@ public class HomeController {
 	
 	@GetMapping("/signin")
 	public String logIn(Model model) {
-	
+		model.addAttribute("title","SIGNIN");
 		return "login";
+	}
+
+	@GetMapping ("/post-signin")
+	public String logInGet(Model model) {
+		model.addAttribute("title","SIGNIN");
+		return "login";
+	}
+	@PostMapping ("/post-signin")
+	public String logInPost(Model model) {
+
+		return "redirect:/user/index";
 	}
 }

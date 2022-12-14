@@ -7,6 +7,13 @@
 </head>
 <body>
 <section>
+    <!-- Success message on top  -->
+
+    <div  th:if="${session.message}"   th:classappend="${session.message.type}"   class="alert  text-center" role="alert">
+        <p th:text="${session.message.msg}"> </p>
+
+        <th:block  th:text="${#session.removeAttribute('message')}"></th:block>
+    </div>
                 <h1>Wellcome <span th:text="${user.name}"></span></h1>    
                 
                    <!-- adding active link jquery  -->

@@ -12,15 +12,23 @@
                 <div class="card me-3">
                     <div class="card-body ">
                         <h1 class="text-center my-3">SETTINGS</h1>
+                        <!-- Success message on top  -->
+
+                        <div  th:if="${session.message}"   th:classappend="${session.message.type}"   class="alert  text-center" role="alert">
+                            <p th:text="${session.message.msg}"> </p>
+
+                            <th:block  th:text="${#session.removeAttribute('message')}"></th:block>
+                        </div>
+
                         <h4>Change Password</h4>
-                              <form action="">
+                              <form th:action="@{/user/setting-process}" method="post">
                                   <!--old password-->
                                   <div class="form-group mb-3">
-                                      <input class="form-control" type="text" placeholder="Enter old password">
+                                      <input name="oldPassword" class="form-control" type="text" placeholder="Enter old password">
                                   </div>
                                   <!--enter new password-->
                                   <div class="form-group mb-3">
-                                      <input class="form-control" type="text" placeholder="enter new password">
+                                      <input name="newPassword" class="form-control" type="text" placeholder="enter new password">
                                   </div>
                                   <div class="container text-center">
                                        <button type="submit" class="btn btn-success">Change</button>
