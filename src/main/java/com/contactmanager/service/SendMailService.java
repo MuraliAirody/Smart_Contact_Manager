@@ -20,7 +20,7 @@ public class SendMailService {
 
 //        get the system properties
         Properties properties = System.getProperties();
-        System.out.println(properties);
+//        System.out.println(properties);
 
 //        set some properties
 
@@ -54,7 +54,8 @@ public class SendMailService {
             mimeMessage.setSubject(subject);
 
             //add text
-            mimeMessage.setText(message);
+//            mimeMessage.setText(message);
+            mimeMessage.setContent(message,"text/html");
 
             //send mail
             Transport.send(mimeMessage);

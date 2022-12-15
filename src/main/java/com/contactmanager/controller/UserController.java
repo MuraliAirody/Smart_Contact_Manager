@@ -294,6 +294,7 @@ public class UserController {
 		
 		String name = principal.getName();
 		User user = this.repository.getUserByName(name);
+		model.addAttribute("title","Profile");
 		
 		model.addAttribute("user",user);
 		

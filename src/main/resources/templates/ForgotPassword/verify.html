@@ -13,7 +13,7 @@
 
         <div class="card" style="margin-top:120px">
 
-          <form  class="card-body cardbody-color p-lg-5"   th:action="@{/signin}" method="post">
+          <form  class="card-body cardbody-color p-lg-5"   th:action="@{/verify_otp}" method="post">
 
             <h2 class="text-center text-dark mb-3">Verify OTP</h2>
 
@@ -26,8 +26,8 @@
             </div>
 
             <div class="mb-3">
-              <input type="text" class="form-control" id="" aria-describedby="emailHelp"
-                     placeholder="Enter OTP" name="email">
+              <input type="text" name="otp" class="form-control" id="" aria-describedby="emailHelp"
+                     placeholder="Enter OTP" >
             </div>
 
 
